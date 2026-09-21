@@ -5,20 +5,44 @@ namespace UnitConverter.Pages;
 
 public class ConversionsModel : PageModel
 {
+    [BindProperty(SupportsGet = true)]
+    public ConversionModel Conversion { get; set; } = new();
+
+    // added to get previous tests to pass acts like a wrapper
+    [BindProperty(SupportsGet = true)]
+    public string ConversionType
+    {
+        get => Conversion.ConversionType;
+        set => Conversion.ConversionType = value;
+    }
+
+    [BindProperty(SupportsGet = true)]
+    public string Input
+    {
+        get => Conversion.Input;
+        set => Conversion.Input = value;
+    }
+
+    public string Output
+    {
+        get => Conversion.Output;
+        set => Conversion.Output = value;
+    }
+
     public void OnGet()
     {
         // here to get lesson 1 tests to pass
-        if (string.IsNullOrEmpty(ConversionType))
+        if (string.IsNullOrEmpty(Conversion.ConversionType))
         {
-            ConversionType = "MilesToKilometers";
+            Conversion.ConversionType = ConversionTypes.MilesToKilometers;
         }
 
-        if (string.IsNullOrEmpty(Input))
+        if (string.IsNullOrEmpty(Conversion.Input))
         {
-            Input = "3.1415";
+            Conversion.Input = "3.1415";
         }
 
-        string displayName = ConversionType switch
+        string displayName = Conversion.ConversionType switch
         {
             "MilesToKilometers" => "Miles to Kilometers",
             "KilometersToMiles" => "Kilometers to Miles",
@@ -28,7 +52,7 @@ public class ConversionsModel : PageModel
             "PoundsToKilograms" => "Pounds to Kilograms",
             "DaysToMinutes" => "Days to Minutes",
             "MinutesToDays" => "Minutes to Days",
-            _ => ConversionType
+            _ => Conversion.ConversionType
         };
 
         ViewData["ConversionType"] = displayName;
@@ -38,7 +62,7 @@ public class ConversionsModel : PageModel
 
         try
         {
-            inputValue = Convert.ToDouble(Input);
+            inputValue = Convert.ToDouble(Conversion.Input);
         }
         catch (Exception)
         {
@@ -48,44 +72,44 @@ public class ConversionsModel : PageModel
 
         double result;
 
-        switch (ConversionType)
+        switch (Conversion.ConversionType)
         {
-            case "MilesToKilometers":
+            case ConversionTypes.MilesToKilometers:
                 result = new UnitOf.Length()
                     .FromMiles(inputValue)
                     .ToKilometers();
                 break;
-            case "KilometersToMiles":
+            case ConversionTypes.KilometersToMiles:
                 result = new UnitOf.Length()
                     .FromKilometers(inputValue)
                     .ToMiles();
                 break;
-            case "FahrenheitToCelsius":
+            case ConversionTypes.FahrenheitToCelsius:
                 result = new UnitOf.Temperature()
                     .FromFahrenheit(inputValue)
                     .ToCelsius();
                 break;
-            case "CelsiusToFahrenheit":
+            case ConversionTypes.CelsiusToFahrenheit:
                 result = new UnitOf.Temperature()
                     .FromCelsius(inputValue)
                     .ToFahrenheit();
                 break;
-            case "KilogramsToPounds":
+            case ConversionTypes.KilogramsToPounds:
                 result = new UnitOf.Mass()
                     .FromKilograms(inputValue)
                     .ToPounds();
                 break;
-            case "PoundsToKilograms":
+            case ConversionTypes.PoundsToKilograms:
                 result = new UnitOf.Mass()
                     .FromPounds(inputValue)
                     .ToKilograms();
                 break;
-            case "DaysToMinutes":
+            case ConversionTypes.DaysToMinutes:
                 result = new UnitOf.Time()
                     .FromDays(inputValue)
                     .ToMinutes();
                 break;
-            case "MinutesToDays":
+            case ConversionTypes.MinutesToDays:
                 result = new UnitOf.Time()
                     .FromMinutes(inputValue)
                     .ToDays();
@@ -95,14 +119,7 @@ public class ConversionsModel : PageModel
                 return;
         }
 
-        Output = result.ToString();
+        Conversion.Output = result.ToString();
     }
 
-    [BindProperty(SupportsGet = true)]
-    public string Input { get; set; } = string.Empty;
-
-    public string Output { get; set; } = string.Empty;
-
-    [BindProperty(SupportsGet = true)]
-    public string ConversionType { get; set; } = string.Empty;
 }
