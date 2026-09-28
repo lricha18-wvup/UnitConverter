@@ -1,0 +1,84 @@
+﻿@page
+@model UnitConverter.Pages.QuickConversions
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+<h1>Quick Conversions</h1>
+
+<p>
+    <a asp-page="/Index">Back to Index</a>
+</p>
+
+@* Had to add a hidden field because the browser was just skipping the handler*@
+
+<form method="get" asp-page-handler="@ConversionTypes.MilesToKilometers" class="mb-3">
+    <input type="hidden" name="handler" value="@ConversionTypes.MilesToKilometers" />
+    <label for="milesInput" class="form-label">@ConversionTypes.All[ConversionTypes.MilesToKilometers]</label>
+    <input id="milesInput" name="input" type="text" class="form-control" />
+    <button type="submit" class="btn btn-primary mt-2"> Convert </button>
+</form>
+
+<form method="get" asp-page-handler="@ConversionTypes.KilometersToMiles" class="mb-3">
+    <input type="hidden" name="handler" value="@ConversionTypes.KilometersToMiles" />
+    <label for="kilometersInput" class="form-label">@ConversionTypes.All[ConversionTypes.KilometersToMiles]</label>
+    <input id="kilometersInput" name="input" type="number" step="any" class="form-control"/>
+    <button type="submit" class="btn btn-primary mt-2"> Convert </button>
+</form>
+
+<form method="get" asp-page-handler="@ConversionTypes.FahrenheitToCelsius" class="mb-3">
+    <input type="hidden" name="handler" value="@ConversionTypes.FahrenheitToCelsius" />
+    <label for="fahrenheitInput" class="form-label">@ConversionTypes.All[ConversionTypes.FahrenheitToCelsius]</label>
+    <textarea id="fahrenheitInput" name="input" rows="1" class="form-control"></textarea>
+    <button type="submit" class="btn btn-primary mt-2"> Convert </button>
+</form>
+
+<form method="get" asp-page-handler="@ConversionTypes.CelsiusToFahrenheit" class="mb-3">
+    <input type="hidden" name="handler" value="@ConversionTypes.CelsiusToFahrenheit" />
+    <label for="celsiusInput" class="form-label">
+        @ConversionTypes.All[ConversionTypes.CelsiusToFahrenheit] (-50 to 150 &deg;C)
+    </label>
+    <input id="celsiusInput" name="input" type="range" class="form-range" min="-50" max="150" value="20"
+           oninput="document.getElementById('celsiusValue').innerText = this.value"/>
+    <div class="form-text">Selected: <span id="celsiusValue">20</span> &deg;C</div>
+    <button type="submit" class="btn btn-primary mt-2"> Convert </button>
+</form>
+
+<form method="get" asp-page-handler="@ConversionTypes.PoundsToKilograms" class="mb-3">
+    <input type="hidden" name="handler" value="@ConversionTypes.PoundsToKilograms" />
+    <label for="poundsInput" class="form-label">@ConversionTypes.All[ConversionTypes.PoundsToKilograms]</label>
+    <select id="poundsInput" name="input" class="form-select" asp-items="Model.PoundOptions"></select>
+    <button type="submit" class="btn btn-primary mt-2"> Convert </button>
+</form>
+
+<form method="get" asp-page-handler="@ConversionTypes.KilogramsToPounds" class="mb-3">
+    <input type="hidden" name="handler" value="@ConversionTypes.KilogramsToPounds" />
+    <label for="kilogramsInput" class="form-label">@ConversionTypes.All[ConversionTypes.KilogramsToPounds]</label>
+    <input id="kilogramsInput" name="input" type="number" step="any" class="form-control"/>
+    <button type="submit" class="btn btn-primary mt-2"> Convert </button>
+</form>
+
+<form method="get" asp-page-handler="@ConversionTypes.DaysToMinutes" class="mb-3">
+    <input type="hidden" name="handler" value="@ConversionTypes.DaysToMinutes" />
+    <label for="daysInput" class="form-label">@ConversionTypes.All[ConversionTypes.DaysToMinutes]</label>
+    <input id="daysInput" name="input" type="number" step="any" class="form-control"/>
+    <button type="submit" class="btn btn-primary mt-2"> Convert </button>
+</form>
+
+<form method="get" asp-page-handler="@ConversionTypes.MinutesToDays" class="mb-3">
+    <input type="hidden" name="handler" value="@ConversionTypes.MinutesToDays"/>
+    <label for="minutesInput" class="form-label">@ConversionTypes.All[ConversionTypes.MinutesToDays]</label>
+    <input id="minutesInput" name="input" type="number" step="any" class="form-control"/>
+    <button type="submit" class="btn btn-primary mt-2"> Convert </button>
+</form>
+
+</div>
+</body>
+</html>
