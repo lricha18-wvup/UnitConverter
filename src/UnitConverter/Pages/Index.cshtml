@@ -1,4 +1,5 @@
 ﻿@page
+@using UnitConverter.Models
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -12,17 +13,17 @@
                 class="form-select">
             @foreach (var conversion in ConversionTypes.All)
             {
-                <option value="@conversion.Key">@conversion.Value</option>
+                  <option value="@conversion.Key">@conversion.Value</option>
             }
         </select>
 
-        <label for="input" class="form-label">Value to Convert</label>
+        <label for="input" class="form-label">Value that will be Convert</label>
         <input id="input"
                name="Conversion.Input"
                type="text"
-               class="form-control" />
+               class="form-control"/>
 
-        <button type="submit" class="btn btn-primary">Convert</button>
+        <button type="submit" class="btn btn-primary">Convert Now</button>
     </form>
 
     <a asp-page="/QuickConversions">Quick Conversions</a>
